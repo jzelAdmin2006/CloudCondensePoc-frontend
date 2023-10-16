@@ -21,6 +21,10 @@ export async function addCloudStorage(
   });
 }
 
+export async function getCloudStorageTypes(): Promise<string[]> {
+  return request("/cloud-storage/types");
+}
+
 async function request(url: string, options: RequestInit = {}): Promise<any> {
   const headers = {
     "Content-Type": "application/json",

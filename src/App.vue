@@ -1,17 +1,22 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { addCloudStorage, getAllCloudStorages } from './api/requests.ts';
+import { defineComponent, ref } from "vue";
+import {
+  addCloudStorage,
+  getAllCloudStorages,
+  getCloudStorageTypes,
+} from "./api/requests.ts";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   setup() {
     const storages = ref<any[]>([]);
     const newStorage = ref({
-      name: '',
-      type: '',
-      username: '',
-      password: ''
+      name: "",
+      type: "",
+      username: "",
+      password: "",
     });
+    const storageTypes = ref<string[]>([]);
 
     const fetchStorages = async () => {
       storages.value = await getAllCloudStorages();
@@ -23,9 +28,14 @@ export default defineComponent({
     };
 
     fetchStorages();
+    const fetchStorageTypes = async () => {
+      storageTypes.value = await getCloudStorageTypes();
+    };
 
-    return { storages, newStorage, addNewStorage };
-  }
+    fetchStorageTypes();
+
+    return { storages, storageTypes, newStorage, addNewStorage };
+  },
 });
 </script>
 
@@ -36,15 +46,14 @@ export default defineComponent({
     <h2>Add New Storage</h2>
     <input v-model="newStorage.name" placeholder="Name" />
     <select v-model="newStorage.type">
-      <!-- Todo: Get storage types from backend -->
-      <option value="Google Drive">Google Drive</option>
-      <option value="TYPE2">Type 2</option>
-      <!-- usw. -->
+      <option v-for="type in storageTypes" :key="type" :value="type">
+        {{ type }}
+      </option>
     </select>
     <input v-model="newStorage.username" placeholder="Username" />
     <input v-model="newStorage.password" placeholder="Password" />
     <button @click="addNewStorage">Add</button>
-    
+
     <h2>Cloud Storages</h2>
     <ul>
       <li v-for="storage in storages" :key="storage.id">
