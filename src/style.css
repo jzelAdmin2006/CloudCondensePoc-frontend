@@ -165,3 +165,10 @@ button:focus-visible {
   overflow-y: auto;
   margin-top: 20px;
 }
+
+.logo {
+  height: 100px;  
+  width: auto;         
+  margin-right: 15px;   
+  vertical-align: middle;
+}

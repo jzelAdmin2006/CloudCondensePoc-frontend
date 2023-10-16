@@ -41,7 +41,10 @@ export default defineComponent({
 
 <template>
   <div id="app">
-    <h1>CloudCondense</h1>
+    <h1>
+      <img src="/logo.png" alt="CloudCondense Logo" class="logo" />
+      CloudCondense
+    </h1>
 
     <div class="content">
       <div class="form-section">
