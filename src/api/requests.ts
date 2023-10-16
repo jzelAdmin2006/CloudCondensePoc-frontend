@@ -25,6 +25,12 @@ export async function getCloudStorageTypes(): Promise<string[]> {
   return request("/cloud-storage/types");
 }
 
+export async function deleteCloudStorage(id: number): Promise<void> {
+  return request(`/cloud-storage/${id}`, {
+    method: "DELETE",
+  });
+}
+
 async function request(url: string, options: RequestInit = {}): Promise<any> {
   const headers = {
     "Content-Type": "application/json",

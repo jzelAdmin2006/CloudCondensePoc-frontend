@@ -2,6 +2,7 @@
 import { defineComponent, ref } from "vue";
 import {
   addCloudStorage,
+  deleteCloudStorage,
   getAllCloudStorages,
   getCloudStorageTypes,
 } from "./api/requests.ts";
@@ -22,19 +23,29 @@ export default defineComponent({
       storages.value = await getAllCloudStorages();
     };
 
+    fetchStorages();
+
     const addNewStorage = async () => {
       await addCloudStorage(newStorage.value);
       fetchStorages();
     };
 
-    fetchStorages();
     const fetchStorageTypes = async () => {
       storageTypes.value = await getCloudStorageTypes();
     };
 
     fetchStorageTypes();
 
-    return { storages, storageTypes, newStorage, addNewStorage };
+    const deleteStorage = async (id: number) => {
+      try {
+        await deleteCloudStorage(id);
+        fetchStorages();
+      } catch (error) {
+        console.error("Deletion failed:", error);
+      }
+    };
+
+    return { storages, storageTypes, newStorage, addNewStorage, deleteStorage };
   },
 });
 </script>
@@ -79,6 +90,9 @@ export default defineComponent({
               <td>{{ storage.name }}</td>
               <td>{{ storage.type }}</td>
               <td>{{ storage.username }}</td>
+              <td>
+                <button @click="() => deleteStorage(storage.id)">Delete</button>
+              </td>
             </tr>
           </tbody>
         </table>
