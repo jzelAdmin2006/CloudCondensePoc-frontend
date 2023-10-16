@@ -43,22 +43,37 @@ export default defineComponent({
   <div>
     <h1>CloudCondense</h1>
 
-    <h2>Add New Storage</h2>
-    <input v-model="newStorage.name" placeholder="Name" />
-    <select v-model="newStorage.type">
-      <option v-for="type in storageTypes" :key="type" :value="type">
-        {{ type }}
-      </option>
-    </select>
-    <input v-model="newStorage.username" placeholder="Username" />
-    <input v-model="newStorage.password" placeholder="Password" />
-    <button @click="addNewStorage">Add</button>
+    <div class="form-group">
+      <h2>Add New Storage</h2>
+      <div class="input-group">
+        <input v-model="newStorage.name" placeholder="Name" />
+        <select v-model="newStorage.type">
+          <option v-for="type in storageTypes" :key="type" :value="type">
+            {{ type }}
+          </option>
+        </select>
+        <input v-model="newStorage.username" placeholder="Username" />
+        <input v-model="newStorage.password" placeholder="Password" />
+        <button @click="addNewStorage">Add</button>
+      </div>
+    </div>
 
     <h2>Cloud Storages</h2>
-    <ul>
-      <li v-for="storage in storages" :key="storage.id">
-        {{ storage.name }} ({{ storage.type }}) with user {{ storage.username }}
-      </li>
-    </ul>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="storage in storages" :key="storage.id">
+          <td>{{ storage.name }}</td>
+          <td>{{ storage.type }}</td>
+          <td>{{ storage.username }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
